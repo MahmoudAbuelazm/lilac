@@ -1,1 +1,1 @@
- String logo='assets/images/logo.png';
+String logo = 'assets/images/logo.png';
