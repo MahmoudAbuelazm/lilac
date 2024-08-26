@@ -1,2 +1,5 @@
-String logo = 'assets/images/logo.png';
-String homeImage = 'assets/images/home_image.png';
+
+String url = 'https://lilac-backend.vercel.app/';
+
+String content = 'content';
+String aboutUs = 'aboutUs';
