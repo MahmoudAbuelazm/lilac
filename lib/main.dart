@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             home: BlocProvider(
               create: (context) => HomeCubit()..getcontent(),
-              child: HomeScreen(),
+              child: const HomeScreen(),
             ),
           );
         });

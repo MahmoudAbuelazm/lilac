@@ -1,15 +1,17 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lilac/utils/constants.dart';
 import 'package:lilac/utils/text_styles.dart';
 import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
 import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../../../data/models/product_model.dart';
+import '../../../utils/icons.dart';
 import '../widgets/home_button.dart';
 import '../widgets/product_item.dart';
 
@@ -45,106 +47,83 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      width: 607.w,
-                                      height: 590.h,
-                                      color: const Color(0xffd2ddbf),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 30.w, vertical: 100.h),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 20.w),
-                                              child: Text(
-                                                  state
-                                                      .responseModel.data.title,
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 35.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 40.w),
-                                              child: Text(
-                                                  state.responseModel.data
-                                                      .landingPageText,
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                HomeButton(
-                                                  title: "Products",
-                                                  onPressed: () {
-                                                    _scrollController.animateTo(
-                                                      1440.h,
-                                                      curve: Curves.easeOut,
-                                                      duration: const Duration(
-                                                          milliseconds: 300),
-                                                    );
-                                                  },
-                                                ),
-                                                HomeButton(
-                                                  title: "Services",
-                                                  onPressed: () {},
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                    FadeInLeft(
+                                      child: Container(
+                                        width: 607.w,
+                                        height: 750.h,
+                                        color: const Color(0xffd2ddbf),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 30.w,
+                                              vertical: 100.h),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 20.w),
+                                                child: Text(
+                                                    state.responseModel.data
+                                                        .title,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 35.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 40.w),
+                                                child: Text(
+                                                    state.responseModel.data
+                                                        .landingPageText,
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 15.sp,
+                                                        fontWeight:
+                                                            FontWeight.normal)),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  HomeButton(
+                                                    title: "Products",
+                                                    onPressed: () {
+                                                      _scrollController
+                                                          .animateTo(
+                                                        1440.h,
+                                                        curve: Curves.easeOut,
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    300),
+                                                      );
+                                                    },
+                                                  ),
+                                                  HomeButton(
+                                                    title: "Services",
+                                                    onPressed: () {},
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Image.network(
-                                        state.responseModel.data
-                                            .landingPageImage.url,
-                                        fit: BoxFit.cover,
+                                    FadeInRight(
+                                      child: Expanded(
+                                        child: Image.network(
+                                          state.responseModel.data
+                                              .landingPageImage.url,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
                                 SizedBox(height: 80.h),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 80.w),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                            "Let's find the favorite interior for your dream.",
-                                            style: GoogleFonts.poppins(
-                                                fontSize: 22.sp,
-                                                fontWeight: FontWeight.normal)),
-                                      ),
-                                      SizedBox(width: 20.w),
-                                      SizedBox(
-                                        width: 615.w,
-                                        height: 65.h,
-                                        child: TextField(
-                                          decoration: InputDecoration(
-                                            fillColor: Colors.white,
-                                            filled: true,
-                                            prefixIcon:
-                                                const Icon(Icons.search),
-                                            focusedBorder: textfieldBorder(),
-                                            enabledBorder: textfieldBorder(),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 75.h),
                                 BlocProvider(
                                   create: (context) =>
                                       AboutUsCubit()..getAboutUs(),
@@ -186,7 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold)),
-                                                        SizedBox(height: 30.h),
                                                         Text(
                                                           state
                                                               .aboutUsModel
@@ -195,12 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           style: GoogleFonts
                                                               .poppins(
                                                                   fontSize:
-                                                                      15.sp,
+                                                                      20.sp,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal),
                                                         ),
-                                                        SizedBox(height: 70.h),
                                                         HomeButton(
                                                           title: "Learn More",
                                                           onPressed: () {},
@@ -472,6 +449,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .normal)),
+                                                              SizedBox(
+                                                                  height: 20.h),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  await launchUrl(Uri.parse(state
+                                                                      .contactUsModel
+                                                                      .data[0]
+                                                                      .socialLinks
+                                                                      .facebook));
+                                                                },
+                                                                child: Row(
+                                                                  children: [
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                      facebook,
+                                                                      height:
+                                                                          30.h,
+                                                                    ),
+                                                                    SizedBox(
+                                                                        width: 5
+                                                                            .w),
+                                                                    Text(
+                                                                        state
+                                                                            .contactUsModel
+                                                                            .data[
+                                                                                0]
+                                                                            .socialLinks
+                                                                            .facebook
+                                                                            .replaceAll("https://www.facebook.com/",
+                                                                                ""),
+                                                                        style: GoogleFonts.poppins(
+                                                                            fontSize:
+                                                                                15.sp,
+                                                                            fontWeight: FontWeight.normal)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 20.h),
                                                             ],
                                                           )
                                                         : const Center(
@@ -488,23 +505,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             thickness: 1,
                                           ),
                                           SizedBox(height: 20.h),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                  "© 2021 Really Great Site. All Rights Reserved.",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              const Spacer(),
-                                              Text(
-                                                  "Terms of use | Privacy Environmental Policy",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          )
                                         ],
                                       ),
                                     ))
@@ -512,9 +512,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        CustomAppBar(
-                          logo: state.responseModel.data.logo.url,
-                          scrollController: _scrollController,
+                        FadeInDown(
+                          child: CustomAppBar(
+                            logo: state.responseModel.data.logo.url,
+                            scrollController: _scrollController,
+                          ),
                         ),
                       ],
                     ),
@@ -564,13 +566,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return Container(
       color: const Color(0xffe4ece0),
       child: Padding(
-        padding: EdgeInsets.only(left: 60.w, right: 80.w),
+        padding: EdgeInsets.only(left: 60.w, right: 80.w, bottom: 20.h),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.network(
               widget.logo,
-              height: 121.h,
+              height: 100.h,
               width: 166.w,
             ),
             Row(
