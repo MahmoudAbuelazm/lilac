@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac/utils/constants.dart';
 import 'package:lilac/utils/text_styles.dart';
 import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
+import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
 
@@ -242,6 +243,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   SizedBox(
                                                     height: 510.h,
                                                     child: ListView.separated(
+                                                      physics:
+                                                          const BouncingScrollPhysics(),
                                                       scrollDirection:
                                                           Axis.horizontal,
                                                       separatorBuilder:
@@ -284,7 +287,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       SizedBox(width: 40.w),
                                                       HomeButton(
                                                           title: "Contact Us",
-                                                          onPressed: () {})
+                                                          onPressed: () {
+                                                            _scrollController
+                                                                .animateTo(
+                                                              3000.h,
+                                                              curve: Curves
+                                                                  .easeOut,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          300),
+                                                            );
+                                                          })
                                                     ],
                                                   ),
                                                   SizedBox(height: 65.w),
@@ -307,31 +321,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Column(
                                         children: [
                                           Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                children: [
-                                                  SizedBox(height: 40.h),
-                                                  Image.network(
-                                                    state.responseModel.data
-                                                        .logo.url,
-                                                    height: 120.h,
-                                                    width: 145.w,
-                                                  ),
-                                                  SizedBox(height: 40.h),
-                                                  Text(
-                                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                                                    style: GoogleFonts.poppins(
-                                                        color: const Color(
-                                                            0xffb69736),
-                                                        fontSize: 15.sp,
-                                                        fontWeight:
-                                                            FontWeight.normal),
-                                                  ),
-                                                ],
+                                              SizedBox(
+                                                width: 350.w,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(height: 40.h),
+                                                    Image.network(
+                                                      state.responseModel.data
+                                                          .logo.url,
+                                                      height: 120.h,
+                                                      width: 145.w,
+                                                    ),
+                                                    SizedBox(height: 40.h),
+                                                    Text(
+                                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                                                      style: GoogleFonts.poppins(
+                                                          color: const Color(
+                                                              0xffb69736),
+                                                          fontSize: 15.sp,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   SizedBox(height: 80.h),
                                                   Text("Quick Links",
@@ -386,46 +409,80 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       .normal)),
                                                 ],
                                               ),
-                                              Column(
-                                                children: [
-                                                  SizedBox(height: 80.h),
-                                                  Text("Contact Us",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 15.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
-                                                  SizedBox(height: 30.h),
-                                                  Text(
-                                                      "123 Anywhere St., Any City, ST 12345",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 15.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal)),
-                                                  SizedBox(height: 20.h),
-                                                  Text(
-                                                      "hello@reallygreatsite.com",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 15.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal)),
-                                                  SizedBox(height: 20.h),
-                                                  Text("+123-456-7890",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 15.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .normal)),
-                                                ],
+                                              BlocProvider(
+                                                create: (context) =>
+                                                    ContactUsCubit()
+                                                      ..getAboutUs(),
+                                                child: BlocBuilder<
+                                                    ContactUsCubit,
+                                                    ContactUsState>(
+                                                  builder: (context, state) {
+                                                    return (state
+                                                            is ContactUsLoaded)
+                                                        ? Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              SizedBox(
+                                                                  height: 80.h),
+                                                              Text("Contact Us",
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize:
+                                                                          15.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold)),
+                                                              SizedBox(
+                                                                  height: 30.h),
+                                                              Text(
+                                                                  state
+                                                                      .contactUsModel
+                                                                      .data[0]
+                                                                      .address,
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize:
+                                                                          15.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)),
+                                                              SizedBox(
+                                                                  height: 20.h),
+                                                              Text(
+                                                                  state
+                                                                      .contactUsModel
+                                                                      .data[0]
+                                                                      .email,
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize:
+                                                                          15.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)),
+                                                              SizedBox(
+                                                                  height: 20.h),
+                                                              Text(
+                                                                  state
+                                                                      .contactUsModel
+                                                                      .data[0]
+                                                                      .phone,
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontSize:
+                                                                          15.sp,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal)),
+                                                            ],
+                                                          )
+                                                        : const Center(
+                                                            child:
+                                                                CircularProgressIndicator());
+                                                  },
+                                                ),
                                               ),
                                             ],
                                           ),
+                                          SizedBox(height: 80.h),
                                           const Divider(
                                             color: Colors.black,
                                             thickness: 1,
@@ -438,14 +495,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   style: GoogleFonts.poppins(
                                                       fontSize: 15.sp,
                                                       fontWeight:
-                                                          FontWeight.normal)),
+                                                          FontWeight.bold)),
                                               const Spacer(),
                                               Text(
                                                   "Terms of use | Privacy Environmental Policy",
                                                   style: GoogleFonts.poppins(
                                                       fontSize: 15.sp,
                                                       fontWeight:
-                                                          FontWeight.normal)),
+                                                          FontWeight.bold)),
                                             ],
                                           )
                                         ],
