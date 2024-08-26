@@ -35,9 +35,9 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.6
   flutter_screenutil: ^5.9.3
+  flutter_spinkit: ^5.2.1
   flutter_svg: ^2.0.10+1
   google_fonts: ^6.2.1
-  talker_dio_logger: ^4.4.1
   url_launcher: ^6.3.0
 
 dev_dependencies:

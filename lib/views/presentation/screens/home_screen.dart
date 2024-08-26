@@ -2,16 +2,16 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lilac/utils/text_styles.dart';
 import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
 import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/icons.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/contact_us_row.dart';
 import '../widgets/home_button.dart';
 import '../widgets/product_item.dart';
 
@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     state.responseModel.data.landingPageImage
                                         .url,
                                     width: 600.w,
+                                    height: 750.h,
                                     fit: BoxFit.cover,
                                   ),
                                 )
@@ -303,49 +304,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ],
                                             ),
                                           ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 80.h),
-                                              Text("Quick Links",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              SizedBox(height: 25.h),
-                                              Text("Home",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                              Text("Slider",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                              Text("Portfolio",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                              Text("Page",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                              Text("Gallery",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                              Text("Blog",
-                                                  style: GoogleFonts.poppins(
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal)),
-                                            ],
-                                          ),
                                           BlocProvider(
                                             create: (context) =>
                                                 ContactUsCubit()..getAboutUs(),
@@ -355,6 +313,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 return (state
                                                         is ContactUsLoaded)
                                                     ? Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
@@ -381,8 +342,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal)),
-                                                          SizedBox(
-                                                              height: 20.h),
                                                           Text(
                                                               state
                                                                   .contactUsModel
@@ -394,8 +353,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal)),
-                                                          SizedBox(
-                                                              height: 20.h),
                                                           Text(
                                                               state
                                                                   .contactUsModel
@@ -408,44 +365,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       FontWeight
                                                                           .normal)),
                                                           SizedBox(
-                                                              height: 20.h),
-                                                          InkWell(
-                                                            onTap: () async {
-                                                              await launchUrl(
-                                                                  Uri.parse(state
-                                                                      .contactUsModel
-                                                                      .data[0]
-                                                                      .socialLinks
-                                                                      .facebook));
-                                                            },
-                                                            child: Row(
-                                                              children: [
-                                                                SvgPicture
-                                                                    .asset(
-                                                                  facebook,
-                                                                  height: 30.h,
-                                                                ),
-                                                                SizedBox(
-                                                                    width: 5.w),
-                                                                Text(
-                                                                    state
-                                                                        .contactUsModel
-                                                                        .data[0]
-                                                                        .socialLinks
-                                                                        .facebook
-                                                                        .replaceAll(
-                                                                            "https://www.facebook.com/",
-                                                                            ""),
-                                                                    style: GoogleFonts.poppins(
-                                                                        fontSize: 15
-                                                                            .sp,
-                                                                        fontWeight:
-                                                                            FontWeight.normal)),
-                                                              ],
-                                                            ),
+                                                              height: 25.h),
+                                                          ContactUsRow(
+                                                            link: state
+                                                                .contactUsModel
+                                                                .data[0]
+                                                                .socialLinks
+                                                                .facebook,
+                                                            icon: facebook,
                                                           ),
-                                                          SizedBox(
-                                                              height: 20.h),
+                                                          ContactUsRow(
+                                                            link: state
+                                                                .contactUsModel
+                                                                .data[0]
+                                                                .socialLinks
+                                                                .linkedIn,
+                                                            icon: linkedin,
+                                                          ),
+                                                          ContactUsRow(
+                                                            link: state
+                                                                .contactUsModel
+                                                                .data[0]
+                                                                .socialLinks
+                                                                .instagram,
+                                                            icon: instagram,
+                                                          ),
+                                                          ContactUsRow(
+                                                            link: state
+                                                                .contactUsModel
+                                                                .data[0]
+                                                                .socialLinks
+                                                                .youtube,
+                                                            icon: youtube,
+                                                          ),
+                                                          ContactUsRow(
+                                                            link: state
+                                                                .contactUsModel
+                                                                .data[0]
+                                                                .socialLinks
+                                                                .twitter,
+                                                            icon: x,
+                                                          ),
                                                         ],
                                                       )
                                                     : const Center(
@@ -456,7 +416,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 80.h),
                                       const Divider(
                                         color: Colors.black,
                                         thickness: 1,
@@ -478,7 +437,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               )
-            : const Center(child: CircularProgressIndicator());
+            : Center(
+                child: SpinKitWave(
+                  color: const Color(0xffb69736),
+                  size: 100.sp,
+                ),
+              );
       },
     );
   }
@@ -487,72 +451,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: BorderRadius.circular(20.r),
-    );
-  }
-}
-
-class CustomAppBar extends StatefulWidget {
-  final String logo;
-  final ScrollController scrollController;
-  const CustomAppBar({
-    super.key,
-    required this.logo,
-    required this.scrollController,
-  });
-
-  @override
-  State<CustomAppBar> createState() => _CustomAppBarState();
-}
-
-class _CustomAppBarState extends State<CustomAppBar> {
-  int _selectedIndex = 0;
-  @override
-  void initState() {
-    widget.scrollController.addListener(() {
-      if (widget.scrollController.offset > 1440.h) {
-        setState(() {
-          _selectedIndex++;
-        });
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffe4ece0),
-      child: Padding(
-        padding: EdgeInsets.only(left: 60.w, right: 80.w, bottom: 20.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.network(
-              widget.logo,
-              height: 100.h,
-              width: 166.w,
-            ),
-            Row(
-              children: [
-                Text("Home",
-                    style: AppTextStyles.poppins_22Bold.copyWith(
-                      color: const Color(0xffb69736),
-                    )),
-                SizedBox(width: 30.w),
-                Text("About Us", style: AppTextStyles.poppins_22Bold),
-                SizedBox(width: 30.w),
-                Text("Products", style: AppTextStyles.poppins_22Bold),
-                SizedBox(width: 30.w),
-                Text("Services", style: AppTextStyles.poppins_22Bold),
-                SizedBox(width: 30.w),
-                Text("Contacts Us", style: AppTextStyles.poppins_22Bold),
-                // SizedBox(width: 30.w),
-                // Text("Blog", style: AppTextStyles.poppins_22Bold),
-              ],
-            )
-          ],
-        ),
-      ),
     );
   }
 }
