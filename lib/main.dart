@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lilac/views/cubit/home_cubit.dart';
+import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 
 import 'views/presentation/screens/home_screen.dart';
 

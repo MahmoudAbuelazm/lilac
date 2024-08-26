@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/content_model.dart';
-import '../../utils/constants.dart';
+import '../../../data/models/content_model.dart';
+import '../../../utils/constants.dart';
 
 part 'home_state.dart';
 

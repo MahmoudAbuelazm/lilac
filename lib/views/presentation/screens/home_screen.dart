@@ -4,10 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac/utils/constants.dart';
 import 'package:lilac/utils/text_styles.dart';
-import 'package:lilac/views/cubit/cubit/about_us_cubit.dart';
-import 'package:lilac/views/cubit/home_cubit.dart';
+import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
+import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
+import 'package:lilac/views/manager/product/product_cubit.dart';
 
+import '../../../data/models/product_model.dart';
 import '../widgets/home_button.dart';
+import '../widgets/product_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -217,56 +220,81 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 80.w),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "News & Updates",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 25.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 55.h),
-                                      Row(
-                                        children: [
-                                          Product(
-                                            img: state.responseModel.data
-                                                .landingPageImage.url,
-                                          ),
-                                          SizedBox(width: 40.w),
-                                          Product(
-                                            img: state.responseModel.data
-                                                .landingPageImage.url,
-                                          ),
-                                          SizedBox(width: 40.w),
-                                          Product(
-                                            img: state.responseModel.data
-                                                .landingPageImage.url,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 120.h),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              "Need any interior design help?",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 32.sp,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          SizedBox(width: 40.w),
-                                          HomeButton(
-                                              title: "Contact Us",
-                                              onPressed: () {})
-                                        ],
-                                      ),
-                                      SizedBox(height: 65.w),
-                                    ],
+                                  child: BlocProvider(
+                                    create: (context) =>
+                                        ProductCubit()..getcontent(),
+                                    child:
+                                        BlocBuilder<ProductCubit, ProductState>(
+                                      builder: (context, state) {
+                                        return (state is ProductLoaded)
+                                            ? Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "News & Updates",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 25.sp,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  SizedBox(height: 55.h),
+                                                  SizedBox(
+                                                    height: 510.h,
+                                                    child: ListView.separated(
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      separatorBuilder:
+                                                          (context, index) =>
+                                                              SizedBox(
+                                                                  height: 20.w),
+                                                      shrinkWrap: true,
+                                                      itemCount: state
+                                                          .productModel
+                                                          .result
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return ProductItem(
+                                                          product: state
+                                                              .productModel
+                                                              .result[index],
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 120.h),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          "Need any interior design help?",
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  fontSize:
+                                                                      32.sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 40.w),
+                                                      HomeButton(
+                                                          title: "Contact Us",
+                                                          onPressed: () {})
+                                                    ],
+                                                  ),
+                                                  SizedBox(height: 65.w),
+                                                ],
+                                              )
+                                            : const Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -509,40 +537,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Product extends StatelessWidget {
-  final String img;
-  const Product({super.key, required this.img});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.network(
-          img,
-          height: 275.h,
-          width: 300.w,
-          fit: BoxFit.cover,
-        ),
-        SizedBox(height: 30.h),
-        Text(
-          "Kitchen Design",
-          style:
-              GoogleFonts.poppins(fontSize: 25.sp, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 20.h),
-        Text(
-          "Lorem ipsum dolor sit amet",
-          style: GoogleFonts.poppins(
-              fontSize: 15.sp, fontWeight: FontWeight.normal),
-        ),
-        SizedBox(height: 45.h),
-        HomeButton(title: "Learn More", onPressed: () {}),
-      ],
     );
   }
 }
