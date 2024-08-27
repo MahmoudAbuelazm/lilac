@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
-                                                          .spaceBetween,
+                                                          .spaceEvenly,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                                 SizedBox(height: 40.h),
                                                 Text(
-                                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                                                  "Skin Care Products to Keep You Glowing All Day ",
                                                   style: GoogleFonts.poppins(
                                                       color: const Color(
                                                           0xffb69736),
