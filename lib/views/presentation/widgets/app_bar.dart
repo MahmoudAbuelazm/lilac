@@ -44,6 +44,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 90.h,
       color: const Color(0xffe4ece0),
       child: Padding(
         padding: EdgeInsets.only(left: 60.w, right: 80.w, bottom: 10.h),

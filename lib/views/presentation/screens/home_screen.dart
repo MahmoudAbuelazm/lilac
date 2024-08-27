@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignment: Alignment.topCenter,
                   children: [
                     SizedBox(
-                      height: 770.h,
+                      height: 810.h,
                       child: SingleChildScrollView(
                         controller: _scrollController,
                         child: Column(
@@ -108,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           builder: (context) =>
                                                               BlocProvider(
                                                                 create: (context) =>
-                                                                    ServiceCubit()..getcontent(),
+                                                                    ServiceCubit()
+                                                                      ..getcontent(),
                                                                 child:
                                                                     const ServiceScreen(),
                                                               )));
@@ -179,10 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   FontWeight
                                                                       .normal),
                                                     ),
-                                                    HomeButton(
-                                                      title: "Learn More",
-                                                      onPressed: () {},
-                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -197,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(height: 80.h),
                             Container(
                                 width: 1200.w,
-                                height: 550.h,
+                                height: 400.h,
                                 color: const Color(0xffd2ddbf),
                                 child: Padding(
                                   padding:
@@ -359,7 +356,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: Colors.black,
                                         thickness: 1,
                                       ),
-                                      SizedBox(height: 20.h),
                                     ],
                                   ),
                                 ))
