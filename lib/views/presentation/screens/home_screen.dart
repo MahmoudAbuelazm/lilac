@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
 import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
@@ -16,7 +13,7 @@ import '../../../utils/icons.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/contact_us_row.dart';
 import '../widgets/home_button.dart';
-import '../widgets/product_item.dart';
+import '../widgets/loading_animation.dart';
 import 'product_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -97,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ProductCubit()
                                                                       ..getcontent(),
                                                                 child:
-                                                                    ProductScreen(),
+                                                                    const ProductScreen(),
                                                               )));
                                                 },
                                               ),
@@ -108,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              ServiceScreen()));
+                                                              const ServiceScreen()));
                                                 },
                                               ),
                                             ],
@@ -192,91 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(height: 80.h),
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(horizontal: 80.w),
-                            //   child: BlocProvider(
-                            //     create: (context) =>
-                            //         ProductCubit()..getcontent(),
-                            //     child: BlocBuilder<ProductCubit, ProductState>(
-                            //       builder: (context, state) {
-                            //         return (state is ProductLoaded)
-                            //             ? Column(
-                            //                 crossAxisAlignment:
-                            //                     CrossAxisAlignment.start,
-                            //                 children: [
-                            //                   Text(
-                            //                     "News & Updates",
-                            //                     style: GoogleFonts.poppins(
-                            //                         fontSize: 25.sp,
-                            //                         fontWeight:
-                            //                             FontWeight.bold),
-                            //                   ),
-                            //                   SizedBox(height: 55.h),
-                            //                   SizedBox(
-                            //                     height: 510.h,
-                            //                     child: ListView.separated(
-                            //                       physics:
-                            //                           const BouncingScrollPhysics(),
-                            //                       scrollDirection:
-                            //                           Axis.horizontal,
-                            //                       separatorBuilder: (context,
-                            //                               index) =>
-                            //                           SizedBox(height: 20.w),
-                            //                       shrinkWrap: true,
-                            //                       itemCount: state.productModel
-                            //                           .result.length,
-                            //                       itemBuilder:
-                            //                           (context, index) {
-                            //                         return ProductItem(
-                            //                           product: state
-                            //                               .productModel
-                            //                               .result[index],
-                            //                         );
-                            //                       },
-                            //                     ),
-                            //                   ),
-                            //                   SizedBox(height: 120.h),
-                            //                   Row(
-                            //                     mainAxisAlignment:
-                            //                         MainAxisAlignment
-                            //                             .spaceBetween,
-                            //                     children: [
-                            //                       Expanded(
-                            //                         child: Text(
-                            //                           "Need any interior design help?",
-                            //                           style:
-                            //                               GoogleFonts.poppins(
-                            //                                   fontSize: 32.sp,
-                            //                                   fontWeight:
-                            //                                       FontWeight
-                            //                                           .bold),
-                            //                         ),
-                            //                       ),
-                            //                       SizedBox(width: 40.w),
-                            //                       HomeButton(
-                            //                           title: "Contact Us",
-                            //                           onPressed: () {
-                            //                             _scrollController
-                            //                                 .animateTo(
-                            //                               3000.h,
-                            //                               curve: Curves.easeOut,
-                            //                               duration:
-                            //                                   const Duration(
-                            //                                       milliseconds:
-                            //                                           300),
-                            //                             );
-                            //                           })
-                            //                     ],
-                            //                   ),
-                            //                   SizedBox(height: 65.w),
-                            //                 ],
-                            //               )
-                            //             : const Center(
-                            //                 child: CircularProgressIndicator());
-                            //       },
-                            //     ),
-                            //   ),
-                            // ),
                             Container(
                                 width: 1200.w,
                                 height: 550.h,
@@ -479,12 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               )
-            : Center(
-                child: SpinKitWave(
-                  color: const Color(0xffb69736),
-                  size: 100.sp,
-                ),
-              );
+            : const LoadingAnimation();
       },
     );
   }

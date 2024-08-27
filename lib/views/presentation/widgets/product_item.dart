@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,20 +16,41 @@ class ProductItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          
-          Image.network(
-            product.image[0].url,
-            height: 275.h,
-            width: 500.w,
-            fit: BoxFit.cover,
+          CarouselSlider(
+            options: CarouselOptions(
+              height: 275.h,
+              aspectRatio: 16 / 9,
+              viewportFraction: 1,
+              enableInfiniteScroll: true,
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              autoPlayCurve: Curves.fastOutSlowIn,
+              enlargeCenterPage: true,
+              scrollDirection: Axis.horizontal,
+            ),
+            items: product.image
+                .map((e) => ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        e.url,
+                        height: 275.h,
+                        width: 500.w,
+                        fit: BoxFit.cover,
+                      ),
+                    ))
+                .toList(),
           ),
           SizedBox(height: 30.h),
           Text(
             product.name,
             style: GoogleFonts.poppins(
-                fontSize: 25.sp, fontWeight: FontWeight.bold),
+                color: const Color(0xffb69736),
+                fontSize: 25.sp,
+                fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 20.h),
           SizedBox(

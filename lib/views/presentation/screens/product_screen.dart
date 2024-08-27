@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lilac/views/presentation/widgets/product_item.dart';
 
 import '../../manager/product/product_cubit.dart';
+import '../widgets/loading_animation.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({super.key});
@@ -24,22 +25,18 @@ class ProductScreen extends StatelessWidget {
                   child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                      crossAxisCount: 2,
+                      childAspectRatio: 2.5 / 2,
+                    ),
                     shrinkWrap: true,
-                    itemCount: state.productModel.result.length * 2,
+                    itemCount: state.productModel.result.length,
                     itemBuilder: (context, index) {
-                      if (index >= state.productModel.result.length) {
-                        return ProductItem(
-                          product: state.productModel
-                              .result[index - state.productModel.result.length],
-                        );
-                      }
                       return ProductItem(
                           product: state.productModel.result[index]);
                     },
                   ),
                 )
-              : const Center(child: CircularProgressIndicator());
+              : const LoadingAnimation();
         },
       ),
     );
