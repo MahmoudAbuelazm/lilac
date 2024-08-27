@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,12 +10,14 @@ import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
 import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
+import 'package:lilac/views/presentation/screens/service_screen.dart';
 
 import '../../../utils/icons.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/contact_us_row.dart';
 import '../widgets/home_button.dart';
 import '../widgets/product_item.dart';
+import 'product_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,8 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         controller: _scrollController,
                         child: Column(
                           children: [
-                            const SizedBox(height: 20),
-                            SizedBox(height: 40.h),
+                            SizedBox(height: 60.h),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -85,17 +88,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                               HomeButton(
                                                 title: "Products",
                                                 onPressed: () {
-                                                  _scrollController.animateTo(
-                                                    1440.h,
-                                                    curve: Curves.easeOut,
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                  );
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              BlocProvider(
+                                                                create: (context) =>
+                                                                    ProductCubit()
+                                                                      ..getcontent(),
+                                                                child:
+                                                                    ProductScreen(),
+                                                              )));
                                                 },
                                               ),
                                               HomeButton(
                                                 title: "Services",
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ServiceScreen()));
+                                                },
                                               ),
                                             ],
                                           )
@@ -128,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Image.network(
                                               state.aboutUsModel.data[0].image
                                                   .url,
-                                              height: 580.h,
+                                              height: 650.h,
                                               width: 320.w,
                                               fit: BoxFit.cover,
                                             ),
@@ -136,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 80.w),
                                               child: SizedBox(
-                                                height: 580.h,
+                                                height: 650.h,
                                                 width: 720.w,
                                                 child: Column(
                                                   mainAxisAlignment:
@@ -178,91 +192,91 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(height: 80.h),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 80.w),
-                              child: BlocProvider(
-                                create: (context) =>
-                                    ProductCubit()..getcontent(),
-                                child: BlocBuilder<ProductCubit, ProductState>(
-                                  builder: (context, state) {
-                                    return (state is ProductLoaded)
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "News & Updates",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 25.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              SizedBox(height: 55.h),
-                                              SizedBox(
-                                                height: 510.h,
-                                                child: ListView.separated(
-                                                  physics:
-                                                      const BouncingScrollPhysics(),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  separatorBuilder: (context,
-                                                          index) =>
-                                                      SizedBox(height: 20.w),
-                                                  shrinkWrap: true,
-                                                  itemCount: state.productModel
-                                                      .result.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return ProductItem(
-                                                      product: state
-                                                          .productModel
-                                                          .result[index],
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                              SizedBox(height: 120.h),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Need any interior design help?",
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                              fontSize: 32.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 40.w),
-                                                  HomeButton(
-                                                      title: "Contact Us",
-                                                      onPressed: () {
-                                                        _scrollController
-                                                            .animateTo(
-                                                          3000.h,
-                                                          curve: Curves.easeOut,
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      300),
-                                                        );
-                                                      })
-                                                ],
-                                              ),
-                                              SizedBox(height: 65.w),
-                                            ],
-                                          )
-                                        : const Center(
-                                            child: CircularProgressIndicator());
-                                  },
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(horizontal: 80.w),
+                            //   child: BlocProvider(
+                            //     create: (context) =>
+                            //         ProductCubit()..getcontent(),
+                            //     child: BlocBuilder<ProductCubit, ProductState>(
+                            //       builder: (context, state) {
+                            //         return (state is ProductLoaded)
+                            //             ? Column(
+                            //                 crossAxisAlignment:
+                            //                     CrossAxisAlignment.start,
+                            //                 children: [
+                            //                   Text(
+                            //                     "News & Updates",
+                            //                     style: GoogleFonts.poppins(
+                            //                         fontSize: 25.sp,
+                            //                         fontWeight:
+                            //                             FontWeight.bold),
+                            //                   ),
+                            //                   SizedBox(height: 55.h),
+                            //                   SizedBox(
+                            //                     height: 510.h,
+                            //                     child: ListView.separated(
+                            //                       physics:
+                            //                           const BouncingScrollPhysics(),
+                            //                       scrollDirection:
+                            //                           Axis.horizontal,
+                            //                       separatorBuilder: (context,
+                            //                               index) =>
+                            //                           SizedBox(height: 20.w),
+                            //                       shrinkWrap: true,
+                            //                       itemCount: state.productModel
+                            //                           .result.length,
+                            //                       itemBuilder:
+                            //                           (context, index) {
+                            //                         return ProductItem(
+                            //                           product: state
+                            //                               .productModel
+                            //                               .result[index],
+                            //                         );
+                            //                       },
+                            //                     ),
+                            //                   ),
+                            //                   SizedBox(height: 120.h),
+                            //                   Row(
+                            //                     mainAxisAlignment:
+                            //                         MainAxisAlignment
+                            //                             .spaceBetween,
+                            //                     children: [
+                            //                       Expanded(
+                            //                         child: Text(
+                            //                           "Need any interior design help?",
+                            //                           style:
+                            //                               GoogleFonts.poppins(
+                            //                                   fontSize: 32.sp,
+                            //                                   fontWeight:
+                            //                                       FontWeight
+                            //                                           .bold),
+                            //                         ),
+                            //                       ),
+                            //                       SizedBox(width: 40.w),
+                            //                       HomeButton(
+                            //                           title: "Contact Us",
+                            //                           onPressed: () {
+                            //                             _scrollController
+                            //                                 .animateTo(
+                            //                               3000.h,
+                            //                               curve: Curves.easeOut,
+                            //                               duration:
+                            //                                   const Duration(
+                            //                                       milliseconds:
+                            //                                           300),
+                            //                             );
+                            //                           })
+                            //                     ],
+                            //                   ),
+                            //                   SizedBox(height: 65.w),
+                            //                 ],
+                            //               )
+                            //             : const Center(
+                            //                 child: CircularProgressIndicator());
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
                             Container(
                                 width: 1200.w,
                                 height: 550.h,
@@ -366,46 +380,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           .normal)),
                                                           SizedBox(
                                                               height: 25.h),
-                                                          ContactUsRow(
-                                                            link: state
-                                                                .contactUsModel
-                                                                .data[0]
-                                                                .socialLinks
-                                                                .facebook,
-                                                            icon: facebook,
-                                                          ),
-                                                          ContactUsRow(
-                                                            link: state
-                                                                .contactUsModel
-                                                                .data[0]
-                                                                .socialLinks
-                                                                .linkedIn,
-                                                            icon: linkedin,
-                                                          ),
-                                                          ContactUsRow(
-                                                            link: state
-                                                                .contactUsModel
-                                                                .data[0]
-                                                                .socialLinks
-                                                                .instagram,
-                                                            icon: instagram,
-                                                          ),
-                                                          ContactUsRow(
-                                                            link: state
-                                                                .contactUsModel
-                                                                .data[0]
-                                                                .socialLinks
-                                                                .youtube,
-                                                            icon: youtube,
-                                                          ),
-                                                          ContactUsRow(
-                                                            link: state
-                                                                .contactUsModel
-                                                                .data[0]
-                                                                .socialLinks
-                                                                .twitter,
-                                                            icon: x,
-                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              ContactUsRow(
+                                                                link: state
+                                                                    .contactUsModel
+                                                                    .data[0]
+                                                                    .socialLinks
+                                                                    .facebook,
+                                                                icon: facebook,
+                                                              ),
+                                                              ContactUsRow(
+                                                                link: state
+                                                                    .contactUsModel
+                                                                    .data[0]
+                                                                    .socialLinks
+                                                                    .linkedIn,
+                                                                icon: linkedin,
+                                                              ),
+                                                              ContactUsRow(
+                                                                link: state
+                                                                    .contactUsModel
+                                                                    .data[0]
+                                                                    .socialLinks
+                                                                    .instagram,
+                                                                icon: instagram,
+                                                              ),
+                                                              ContactUsRow(
+                                                                link: state
+                                                                    .contactUsModel
+                                                                    .data[0]
+                                                                    .socialLinks
+                                                                    .youtube,
+                                                                icon: youtube,
+                                                              ),
+                                                              ContactUsRow(
+                                                                link: state
+                                                                    .contactUsModel
+                                                                    .data[0]
+                                                                    .socialLinks
+                                                                    .twitter,
+                                                                icon: x,
+                                                              ),
+                                                            ],
+                                                          )
                                                         ],
                                                       )
                                                     : const Center(
@@ -432,6 +453,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: CustomAppBar(
                         logo: state.responseModel.data.logo.url,
                         scrollController: _scrollController,
+                        onIndexSelected: (index) {
+                          if (index == 0) {
+                            _scrollController.animateTo(
+                              0,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300),
+                            );
+                          } else if (index == 1) {
+                            _scrollController.animateTo(
+                              800.h,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300),
+                            );
+                          } else if (index == 2) {
+                            _scrollController.animateTo(
+                              1440.h,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

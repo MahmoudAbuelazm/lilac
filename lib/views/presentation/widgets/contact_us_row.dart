@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsRow extends StatelessWidget {
@@ -18,26 +15,14 @@ class ContactUsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 5.h),
       child: InkWell(
         onTap: () async {
-          await launchUrl(
-              Uri.parse(link));
+          await launchUrl(Uri.parse(link));
         },
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              icon,
-              height: 30.h,
-            ),
-            SizedBox(width: 5.w),
-            Text(
-                link
-                    .split('/')
-                    .last,
-                style: GoogleFonts.poppins(
-                    fontSize: 15.sp, fontWeight: FontWeight.normal)),
-          ],
+        child: SvgPicture.asset(
+          icon,
+          height: 30.h,
         ),
       ),
     );
