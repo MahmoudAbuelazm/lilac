@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lilac/views/presentation/widgets/product_item.dart';
 
 import '../../manager/product/product_cubit.dart';
@@ -15,7 +16,11 @@ class ProductScreen extends StatelessWidget {
       backgroundColor: const Color(0xffe4ece0),
       appBar: AppBar(
         backgroundColor: const Color(0xffe4ece0),
-        title: const Text("Products"),
+        title: Text("Products",
+            style: TextStyle(
+                color: const Color(0xffb69736),
+                fontSize: 26.sp,
+                fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: BlocBuilder<ProductCubit, ProductState>(

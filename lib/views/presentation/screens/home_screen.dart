@@ -7,6 +7,7 @@ import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
 import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
+import 'package:lilac/views/manager/service_cubit/service_cubit.dart';
 import 'package:lilac/views/presentation/screens/service_screen.dart';
 
 import '../../../utils/icons.dart';
@@ -105,7 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const ServiceScreen()));
+                                                              BlocProvider(
+                                                                create: (context) =>
+                                                                    ServiceCubit()..getcontent(),
+                                                                child:
+                                                                    const ServiceScreen(),
+                                                              )));
                                                 },
                                               ),
                                             ],
