@@ -5,44 +5,170 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lilac/views/presentation/widgets/product_item.dart';
 
 import '../../manager/product/product_cubit.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/footer.dart';
 import '../widgets/loading_animation.dart';
 
-class ProductScreen extends StatelessWidget {
-  const ProductScreen({super.key});
+class ProductScreen extends StatefulWidget {
+  final String logo;
+  final ScrollController scrollController;
+  const ProductScreen(
+      {super.key, required this.logo, required this.scrollController});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    _searchController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffe4ece0),
-      appBar: AppBar(
-        backgroundColor: const Color(0xffe4ece0),
-        title: Text("Products",
-            style: TextStyle(
-                color: const Color(0xffb69736),
-                fontSize: 26.sp,
-                fontWeight: FontWeight.bold)),
-        centerTitle: true,
-      ),
-      body: BlocBuilder<ProductCubit, ProductState>(
-        builder: (context, state) {
-          return (state is ProductLoaded)
-              ? FadeInRight(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
+      body: Column(
+        children: [
+          CustomAppBar(
+            logo: widget.logo,
+            scrollController: widget.scrollController,
+            onIndexSelected: (index) {
+              if (index == 0) {
+                widget.scrollController.animateTo(
+                  0,
+                  curve: Curves.easeOut,
+                  duration: const Duration(milliseconds: 300),
+                );
+              } else if (index == 1) {
+                widget.scrollController.animateTo(
+                  800.h,
+                  curve: Curves.easeOut,
+                  duration: const Duration(milliseconds: 300),
+                );
+              } else if (index == 2) {
+                widget.scrollController.animateTo(
+                  1440.h,
+                  curve: Curves.easeOut,
+                  duration: const Duration(milliseconds: 300),
+                );
+              }
+            },
+            title: 'Products',
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search for services',
+                fillColor: Colors.white,
+                filled: true,
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          _searchController.text.isEmpty
+              ? BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    return (state is ProductLoaded)
+                        ? Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  FadeInRight(
+                                    child: GridView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: .7,
+                                        mainAxisSpacing: 0,
+                                      ),
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          state.productModel.result.length,
+                                      itemBuilder: (context, index) {
+                                        return ProductItem(
+                                            product: state
+                                                .productModel.result[index]);
+                                      },
+                                    ),
+                                  ),
+                                  Footer(
+                                    logo: widget.logo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : const LoadingAnimation();
+                  },
+                )
+              : BlocProvider(
+                  create: (context) =>
+                      ProductCubit()..getcontentById(_searchController.text),
+                  child: Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          BlocBuilder<ProductCubit, ProductState>(
+                            builder: (context, state) {
+                              return (state is ProductLoaded)
+                                  ? FadeInRight(
+                                      child: GridView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: .7,
+                                          mainAxisSpacing: 0,
+                                        ),
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            state.productModel.result.length,
+                                        itemBuilder: (context, index) {
+                                          return ProductItem(
+                                              product: state
+                                                  .productModel.result[index]);
+                                        },
+                                      ),
+                                    )
+                                  : const LoadingAnimation();
+                            },
+                          ),
+                          Footer(
+                            logo: widget.logo,
+                          ),
+                        ],
+                      ),
                     ),
-                    shrinkWrap: true,
-                    itemCount: state.productModel.result.length,
-                    itemBuilder: (context, index) {
-                      return ProductItem(
-                          product: state.productModel.result[index]);
-                    },
                   ),
                 )
-              : const LoadingAnimation();
-        },
+        ],
       ),
     );
   }

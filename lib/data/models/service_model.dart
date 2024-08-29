@@ -32,6 +32,7 @@ class Result {
   final DateTime updatedAt;
   final int v;
 
+
   Result({
     required this.video,
     required this.id,
@@ -53,6 +54,7 @@ class Result {
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       v: json['__v'],
+      
     );
   }
 

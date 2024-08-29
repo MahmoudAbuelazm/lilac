@@ -4,6 +4,8 @@ sealed class ServiceState {}
 
 final class ServiceInitial extends ServiceState {}
 
+final class ServiceLoading extends ServiceState {}
+
 final class ServiceLoaded extends ServiceState {
   final ServiceModel serviceModel;
 

@@ -7,11 +7,13 @@ class CustomAppBar extends StatefulWidget {
   final String logo;
   final ScrollController scrollController;
   final void Function(int index) onIndexSelected;
+  final String? title;
   const CustomAppBar({
     super.key,
     required this.logo,
     required this.scrollController,
     required this.onIndexSelected,
+    this.title,
   });
 
   @override
@@ -19,7 +21,7 @@ class CustomAppBar extends StatefulWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  int _selectedIndex = 0;
+  int _selectedIndex = -1;
   @override
   void initState() {
     widget.scrollController.addListener(() {
@@ -32,12 +34,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
         setState(() {
           _selectedIndex = 2;
         });
-      } else {
-        setState(() {
-          _selectedIndex = 0;
-        });
+      } else if (widget.scrollController.offset <= 405.h) {
+        {
+          setState(() {
+            _selectedIndex = 0;
+          });
+        }
       }
     });
+
     super.initState();
   }
 
@@ -51,22 +56,42 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.network(
-              widget.logo,
-              height: 80.h,
-              width: 166.w,
+            Row(
+              children: [
+                Image.network(
+                  widget.logo,
+                  height: 80.h,
+                  width: 166.w,
+                ),
+                if (widget.title != null)
+                  Visibility(
+                    visible: widget.title != null,
+                    child: Text(widget.title!,
+                        style: AppTextStyles.poppins_22Bold
+                            .copyWith(color: const Color(0xffb69736))),
+                  ),
+              ],
             ),
             Row(
               children: [
                 InkWell(
                   onTap: () {
-                    widget.onIndexSelected(0);
-                    setState(() {
-                      _selectedIndex = 0;
-                    });
+                    if (widget.title != null) {
+                      Navigator.of(context).pop();
+                      widget.onIndexSelected(0);
+                      setState(() {
+                        _selectedIndex = 0;
+                      });
+                    } else {
+                      widget.onIndexSelected(0);
+                      setState(() {
+                        _selectedIndex = 0;
+                      });
+                    }
                   },
                   child: Text("Home",
                       style: AppTextStyles.poppins_22Bold.copyWith(
+                        fontSize: 18.sp,
                         color: _selectedIndex == 0
                             ? const Color(0xffb69736)
                             : Colors.black,
@@ -75,36 +100,51 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 SizedBox(width: 30.w),
                 InkWell(
                   onTap: () {
-                    widget.onIndexSelected(1);
-                    setState(() {
-                      _selectedIndex = 1;
-                    });
+                    if (widget.title != null) {
+                      Navigator.of(context).pop();
+                      widget.onIndexSelected(1);
+                      setState(() {
+                        _selectedIndex = 1;
+                      });
+                    } else {
+                      widget.onIndexSelected(1);
+                      setState(() {
+                        _selectedIndex = 1;
+                      });
+                    }
                   },
                   child: Text("About Us",
                       style: AppTextStyles.poppins_22Bold.copyWith(
+                        fontSize: 18.sp,
                         color: _selectedIndex == 1
                             ? const Color(0xffb69736)
                             : Colors.black,
                       )),
                 ),
                 SizedBox(width: 30.w),
-
                 InkWell(
                   onTap: () {
-                    widget.onIndexSelected(2);
-                    setState(() {
-                      _selectedIndex = 2;
-                    });
+                    if (widget.title != null) {
+                      Navigator.of(context).pop();
+                      widget.onIndexSelected(2);
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
+                    } else {
+                      widget.onIndexSelected(2);
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
+                    }
                   },
                   child: Text("Contacts Us",
                       style: AppTextStyles.poppins_22Bold.copyWith(
+                        fontSize: 18.sp,
                         color: _selectedIndex == 2
                             ? const Color(0xffb69736)
                             : Colors.black,
                       )),
                 ),
-                // SizedBox(width: 30.w),
-                // Text("Blog", style: AppTextStyles.poppins_22Bold),
               ],
             )
           ],

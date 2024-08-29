@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lilac/utils/constants.dart';
 import 'package:lilac/views/manager/about_us_cubit/about_us_cubit.dart';
-import 'package:lilac/views/manager/contact_us/contact_us_cubit.dart';
 import 'package:lilac/views/manager/home_cubit/home_cubit.dart';
 import 'package:lilac/views/manager/product/product_cubit.dart';
 import 'package:lilac/views/manager/service_cubit/service_cubit.dart';
 import 'package:lilac/views/presentation/screens/service_screen.dart';
 
-import '../../../utils/icons.dart';
 import '../widgets/app_bar.dart';
-import '../widgets/contact_us_row.dart';
+import '../widgets/footer.dart';
 import '../widgets/home_button.dart';
 import '../widgets/loading_animation.dart';
 import 'product_screen.dart';
@@ -28,7 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocConsumer<HomeCubit, HomeState>(
+      listener: (context, state) {
+        if (state is HomeLoaded) {
+          networklogo = state.responseModel.data.logo.url;
+        }
+      },
       builder: (context, state) {
         return (state is HomeLoaded)
             ? Scaffold(
@@ -95,7 +99,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ProductCubit()
                                                                       ..getcontent(),
                                                                 child:
-                                                                    const ProductScreen(),
+                                                                    ProductScreen(
+                                                                  logo: state
+                                                                      .responseModel
+                                                                      .data
+                                                                      .logo
+                                                                      .url,
+                                                                  scrollController:
+                                                                      _scrollController,
+                                                                ),
                                                               )));
                                                 },
                                               ),
@@ -111,7 +123,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     ServiceCubit()
                                                                       ..getcontent(),
                                                                 child:
-                                                                    const ServiceScreen(),
+                                                                    ServiceScreen(
+                                                                  logo: state
+                                                                      .responseModel
+                                                                      .data
+                                                                      .logo
+                                                                      .url,
+                                                                  scrollController:
+                                                                      _scrollController,
+                                                                ),
                                                               )));
                                                 },
                                               ),
@@ -192,173 +212,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(height: 80.h),
-                            Container(
-                                width: 1200.w,
-                                height: 400.h,
-                                color: const Color(0xffd2ddbf),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 80.w),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 350.w,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(height: 40.h),
-                                                Image.network(
-                                                  state.responseModel.data.logo
-                                                      .url,
-                                                  height: 120.h,
-                                                  width: 145.w,
-                                                ),
-                                                SizedBox(height: 40.h),
-                                                Text(
-                                                  "Skin Care Products to Keep You Glowing All Day ",
-                                                  style: GoogleFonts.poppins(
-                                                      color: const Color(
-                                                          0xffb69736),
-                                                      fontSize: 15.sp,
-                                                      fontWeight:
-                                                          FontWeight.normal),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          BlocProvider(
-                                            create: (context) =>
-                                                ContactUsCubit()..getAboutUs(),
-                                            child: BlocBuilder<ContactUsCubit,
-                                                ContactUsState>(
-                                              builder: (context, state) {
-                                                return (state
-                                                        is ContactUsLoaded)
-                                                    ? Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          SizedBox(
-                                                              height: 80.h),
-                                                          Text("Contact Us",
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                          SizedBox(
-                                                              height: 30.h),
-                                                          Text(
-                                                              state
-                                                                  .contactUsModel
-                                                                  .data[0]
-                                                                  .address,
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal)),
-                                                          Text(
-                                                              state
-                                                                  .contactUsModel
-                                                                  .data[0]
-                                                                  .email,
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal)),
-                                                          Text(
-                                                              state
-                                                                  .contactUsModel
-                                                                  .data[0]
-                                                                  .phone,
-                                                              style: GoogleFonts.poppins(
-                                                                  fontSize:
-                                                                      15.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal)),
-                                                          SizedBox(
-                                                              height: 25.h),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              ContactUsRow(
-                                                                link: state
-                                                                    .contactUsModel
-                                                                    .data[0]
-                                                                    .socialLinks
-                                                                    .facebook,
-                                                                icon: facebook,
-                                                              ),
-                                                              ContactUsRow(
-                                                                link: state
-                                                                    .contactUsModel
-                                                                    .data[0]
-                                                                    .socialLinks
-                                                                    .linkedIn,
-                                                                icon: linkedin,
-                                                              ),
-                                                              ContactUsRow(
-                                                                link: state
-                                                                    .contactUsModel
-                                                                    .data[0]
-                                                                    .socialLinks
-                                                                    .instagram,
-                                                                icon: instagram,
-                                                              ),
-                                                              ContactUsRow(
-                                                                link: state
-                                                                    .contactUsModel
-                                                                    .data[0]
-                                                                    .socialLinks
-                                                                    .youtube,
-                                                                icon: youtube,
-                                                              ),
-                                                              ContactUsRow(
-                                                                link: state
-                                                                    .contactUsModel
-                                                                    .data[0]
-                                                                    .socialLinks
-                                                                    .twitter,
-                                                                icon: x,
-                                                              ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      )
-                                                    : const Center(
-                                                        child:
-                                                            CircularProgressIndicator());
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Divider(
-                                        color: Colors.black,
-                                        thickness: 1,
-                                      ),
-                                    ],
-                                  ),
-                                ))
+                            Footer(
+                              logo: state.responseModel.data.logo.url,
+                            )
                           ],
                         ),
                       ),

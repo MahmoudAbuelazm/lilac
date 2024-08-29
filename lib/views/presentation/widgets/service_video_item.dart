@@ -70,7 +70,7 @@ class _ServiceVideoItemState extends State<ServiceVideoItem> {
                   aspectRatio: _controller.value.aspectRatio,
                   child: VideoPlayer(_controller),
                 )
-              : const Center(child: const CircularProgressIndicator()),
+              : const Center(child:  CircularProgressIndicator()),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
