@@ -71,18 +71,10 @@ class _ProductScreenState extends State<ProductScreen> {
                 fillColor: Colors.white,
                 filled: true,
                 prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                border: borderTextField(),
+                enabledBorder: borderTextField(),
+                disabledBorder: borderTextField(),
+                focusedBorder: borderTextField(),
               ),
             ),
           ),
@@ -102,9 +94,14 @@ class _ProductScreenState extends State<ProductScreen> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
-                                        childAspectRatio: .7,
+                                        childAspectRatio:
+                                            MediaQuery.of(context).size.width /
+                                                (MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    1.65),
                                         mainAxisSpacing: 0,
                                       ),
                                       shrinkWrap: true,
@@ -178,7 +175,6 @@ class _ProductScreenState extends State<ProductScreen> {
                                       },
                                     ),
                                   ),
-                                 
                                   Footer(
                                     logo: widget.logo,
                                   ),
@@ -191,6 +187,12 @@ class _ProductScreenState extends State<ProductScreen> {
                 )
         ],
       ),
+    );
+  }
+
+  OutlineInputBorder borderTextField() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
     );
   }
 }
