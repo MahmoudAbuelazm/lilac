@@ -25,7 +25,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
   @override
   void initState() {
     _searchController.addListener(() {
-      print(_searchController.text);
       setState(() {});
     });
     super.initState();
@@ -116,71 +115,40 @@ class _ServiceScreenState extends State<ServiceScreen> {
                           : const LoadingAnimation();
                     },
                   )
-                : BlocProvider(
-                    create: (context) =>
-                        ServiceCubit()..getcontentById(_searchController.text),
-                    child: BlocBuilder<ServiceCubit, ServiceState>(
-                      builder: (context, state) {
-                        return (state is ServiceLoaded)
-                            ? Expanded(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      ...state.serviceModel.results
-                                          .map((service) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 20.h),
-                                          child: ServiceItem(service: service),
-                                        );
-                                      }),
-                                      const Footer(
-                                        logo: "",
-                                      )
-                                    ],
-                                  ),
+                : BlocBuilder<ServiceCubit, ServiceState>(
+                    builder: (context, state) {
+                      return (state is ServiceLoaded)
+                          ? Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    ...state.serviceModel.results
+                                        .where((service) =>
+                                            service.name.toLowerCase().contains(
+                                                _searchController.text
+                                                    .toLowerCase()) ||
+                                            service.description
+                                                .toLowerCase()
+                                                .contains(_searchController.text
+                                                    .toLowerCase()))
+                                        .map((service) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 20.h),
+                                        child: ServiceItem(service: service),
+                                      );
+                                    }),
+                                    const Footer(
+                                      logo: "",
+                                    )
+                                  ],
                                 ),
-                              )
-                            : const LoadingAnimation();
-                      },
-                    ),
+                              ),
+                            )
+                          : const LoadingAnimation();
+                    },
                   ),
           ],
         ));
   }
 }
-
-
-// BlocBuilder<ServiceCubit, ServiceState>(
-//                     builder: (context, state) {
-//                       return (state is ServiceLoaded)
-//                           ? Expanded(
-//                               child: SingleChildScrollView(
-//                                 child: Column(
-//                                   children: [
-//                                     ...state.serviceModel.results
-//                                         .where((service) =>
-//                                             service.name.toLowerCase().contains(
-//                                                 _searchController.text
-//                                                     .toLowerCase()) ||
-//                                             service.description
-//                                                 .toLowerCase()
-//                                                 .contains(_searchController.text
-//                                                     .toLowerCase()))
-//                                         .map((service) {
-//                                       return Padding(
-//                                         padding: EdgeInsets.symmetric(
-//                                             vertical: 20.h),
-//                                         child: ServiceItem(service: service),
-//                                       );
-//                                     }),
-//                                     const Footer(
-//                                       logo: "",
-//                                     )
-//                                   ],
-//                                 ),
-//                               ),
-//                             )
-//                           : const LoadingAnimation();
-//                     },
-//                   ),

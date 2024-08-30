@@ -127,46 +127,67 @@ class _ProductScreenState extends State<ProductScreen> {
                         : const LoadingAnimation();
                   },
                 )
-              : BlocProvider(
-                  create: (context) =>
-                      ProductCubit()..getcontentById(_searchController.text),
-                  child: Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          BlocBuilder<ProductCubit, ProductState>(
-                            builder: (context, state) {
-                              return (state is ProductLoaded)
-                                  ? FadeInRight(
-                                      child: GridView.builder(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
-                                          childAspectRatio: .7,
-                                          mainAxisSpacing: 0,
-                                        ),
-                                        shrinkWrap: true,
-                                        itemCount:
-                                            state.productModel.result.length,
-                                        itemBuilder: (context, index) {
-                                          return ProductItem(
-                                              product: state
-                                                  .productModel.result[index]);
-                                        },
+              : BlocBuilder<ProductCubit, ProductState>(
+                  builder: (context, state) {
+                    return (state is ProductLoaded)
+                        ? Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  FadeInRight(
+                                    child: GridView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: .7,
+                                        mainAxisSpacing: 0,
                                       ),
-                                    )
-                                  : const LoadingAnimation();
-                            },
-                          ),
-                          Footer(
-                            logo: widget.logo,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                                      shrinkWrap: true,
+                                      itemCount: state.productModel.result
+                                          .where((product) =>
+                                              product.name
+                                                  .toLowerCase()
+                                                  .contains(_searchController
+                                                      .text
+                                                      .toLowerCase()) ||
+                                              product.description
+                                                  .toLowerCase()
+                                                  .contains(_searchController
+                                                      .text
+                                                      .toLowerCase()))
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        var filteredProducts = state
+                                            .productModel.result
+                                            .where((product) =>
+                                                product.name
+                                                    .toLowerCase()
+                                                    .contains(_searchController
+                                                        .text
+                                                        .toLowerCase()) ||
+                                                product.description
+                                                    .toLowerCase()
+                                                    .contains(_searchController
+                                                        .text
+                                                        .toLowerCase()))
+                                            .toList();
+                                        return ProductItem(
+                                            product: filteredProducts[index]);
+                                      },
+                                    ),
+                                  ),
+                                 
+                                  Footer(
+                                    logo: widget.logo,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        : const LoadingAnimation();
+                  },
                 )
         ],
       ),
