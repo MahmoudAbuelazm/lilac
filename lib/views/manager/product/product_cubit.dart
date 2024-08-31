@@ -18,7 +18,6 @@ class ProductCubit extends Cubit<ProductState> {
   }
 
   Future<void> getcontentById(String id) async {
-    print("id: $id");
     emit(ProductLoading());
     final response = await dio.get("$url$product?slug=$id");
     productModel = ProductModel.fromJson(response.data);

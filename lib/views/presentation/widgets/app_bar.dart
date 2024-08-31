@@ -56,22 +56,25 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Image.network(
-                  widget.logo,
-                  height: 80.h,
-                  width: 166.w,
-                ),
-                if (widget.title != null)
-                  Visibility(
-                    visible: widget.title != null,
-                    child: Text(widget.title!,
-                        style: AppTextStyles.poppins_22Bold
-                            .copyWith(color: const Color(0xffb69736))),
-                  ),
-              ],
+            InkWell(
+              onTap: () {
+                if (widget.title != null) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Image.network(
+                widget.logo,
+                height: 80.h,
+                width: 166.w,
+              ),
             ),
+            if (widget.title != null)
+              Visibility(
+                visible: widget.title != null,
+                child: Text(widget.title!,
+                    style: AppTextStyles.poppins_22Bold
+                        .copyWith(color: const Color(0xffb69736))),
+              ),
             Row(
               children: [
                 InkWell(
