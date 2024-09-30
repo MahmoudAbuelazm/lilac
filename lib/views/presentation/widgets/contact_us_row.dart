@@ -18,7 +18,7 @@ class ContactUsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isgate ? 8.w : 5.h),
+      padding: EdgeInsets.symmetric(horizontal: 5.h),
       child: InkWell(
           onTap: () async {
             await launchUrl(Uri.parse(link));
