@@ -147,6 +147,10 @@ class Footer extends StatelessWidget {
                     link: "https://www.linkedin.com/company/the-gate-1/",
                     icon: linkedinGate,
                     isgate: true,
+                  ),ContactUsRow(
+                    link: "https://x.com/TheGate1a",
+                    icon: xGate,
+                    isgate: true,
                   ),
                 ],
               )
