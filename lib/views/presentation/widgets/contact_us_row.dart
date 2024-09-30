@@ -6,25 +6,27 @@ import 'package:url_launcher/url_launcher.dart';
 class ContactUsRow extends StatelessWidget {
   final String link;
   final String icon;
+  final bool isgate;
+
   const ContactUsRow({
     super.key,
     required this.link,
     required this.icon,
+    this.isgate = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.h),
+      padding: EdgeInsets.symmetric(horizontal: isgate ? 8.w : 5.h),
       child: InkWell(
-        onTap: () async {
-          await launchUrl(Uri.parse(link));
-        },
-        child: SvgPicture.asset(
-          icon,
-          height: 30.h,
-        ),
-      ),
+          onTap: () async {
+            await launchUrl(Uri.parse(link));
+          },
+          child: SvgPicture.asset(
+            icon,
+            height: isgate ? 20.h : 30.h,
+          )),
     );
   }
 }

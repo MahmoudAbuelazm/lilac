@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/constants.dart';
 import '../../../utils/icons.dart';
@@ -123,6 +124,47 @@ class Footer extends StatelessWidget {
                 color: Colors.black,
                 thickness: 1,
               ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await launchUrl(Uri.parse("https://thegate1.com/ar_EG"));
+                    },
+                    child: Text(
+                      "Developed by The Gate 1",
+                      style: GoogleFonts.poppins(
+                        color: Colors.black.withOpacity(.5),
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                  ContactUsRow(
+                    link: "https://www.facebook.com/thegate1.a/",
+                    icon: facebookGate,
+                    isgate: true,
+                  ),
+                  ContactUsRow(
+                    link: "https://www.linkedin.com/company/the-gate-1/",
+                    icon: linkedinGate,
+                    isgate: true,
+                  ),
+                  ContactUsRow(
+                    link: "https://x.com/TheGate1a",
+                    icon: xGate,
+                    isgate: true,
+                  ),
+                  ContactUsRow(
+                    link: "https://www.linkedin.com/company/the-gate-1/",
+                    icon: linkedinGate,
+                    isgate: true,
+                  ),
+                  ContactUsRow(
+                    link: "https://www.linkedin.com/company/the-gate-1/",
+                    icon: linkedinGate,
+                    isgate: true,
+                  ),
+                ],
+              )
             ],
           ),
         ));
