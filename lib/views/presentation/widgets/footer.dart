@@ -139,23 +139,8 @@ class Footer extends StatelessWidget {
                     ),
                   ),
                   ContactUsRow(
-                    link: "https://www.facebook.com/thegate1.a/",
+                    link: "https://www.linkedin.com/company/the-gate-1/",
                     icon: facebookGate,
-                    isgate: true,
-                  ),
-                  ContactUsRow(
-                    link: "https://www.linkedin.com/company/the-gate-1/",
-                    icon: linkedinGate,
-                    isgate: true,
-                  ),
-                  ContactUsRow(
-                    link: "https://x.com/TheGate1a",
-                    icon: xGate,
-                    isgate: true,
-                  ),
-                  ContactUsRow(
-                    link: "https://www.linkedin.com/company/the-gate-1/",
-                    icon: linkedinGate,
                     isgate: true,
                   ),
                   ContactUsRow(

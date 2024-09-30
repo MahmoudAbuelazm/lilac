@@ -23,7 +23,7 @@ class ContactUsRow extends StatelessWidget {
           onTap: () async {
             await launchUrl(Uri.parse(link));
           },
-          child: SvgPicture.asset(
+          child: SvgPicture.network(
             icon,
             height: isgate ? 20.h : 30.h,
           )),
