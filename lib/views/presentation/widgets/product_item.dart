@@ -66,7 +66,7 @@ class ProductItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Price: \$${product.price}",
+                  "Price: ${product.price} EGP",
                   style: GoogleFonts.poppins(
                     color: const Color(0xffb69736),
                     fontSize: 20.sp,
@@ -84,7 +84,7 @@ class ProductItem extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.h),
-          Text("Final Price: \$${product.finalPrice}",
+          Text("Final Price: ${product.finalPrice} EGP",
               style: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 20.sp,

@@ -19,7 +19,7 @@ class Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: 1200.w,
-        height: 400.h,
+        height: 350.h,
         color: const Color(0xffd2ddbf),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 80.w),
@@ -42,7 +42,7 @@ class Footer extends StatelessWidget {
                         ),
                         SizedBox(height: 40.h),
                         Text(
-                          "Skin Care Products to Keep You Glowing All Day ",
+                          "Skin Care Products to Keep You Glowing All Day",
                           style: GoogleFonts.poppins(
                               color: const Color(0xffb69736),
                               fontSize: 15.sp,
