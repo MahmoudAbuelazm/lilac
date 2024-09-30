@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return  MaterialApp(
+            title: 'Lilac',
             debugShowCheckedModeBanner: false,
             home: BlocProvider(
               create: (context) => HomeCubit()..getcontent(),
