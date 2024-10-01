@@ -124,9 +124,7 @@ class Footer extends StatelessWidget {
                 color: Colors.black,
                 thickness: 1,
               ),
-              Row(
-                children: [
-                  InkWell(
+              InkWell(
                     onTap: () async {
                       await launchUrl(Uri.parse("https://thegate1.com/ar_EG"));
                     },
@@ -138,22 +136,7 @@ class Footer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ContactUsRow(
-                    link: "https://www.linkedin.com/company/the-gate-1/",
-                    icon: facebookGate,
-                    isgate: true,
-                  ),
-                  ContactUsRow(
-                    link: "https://www.linkedin.com/company/the-gate-1/",
-                    icon: linkedinGate,
-                    isgate: true,
-                  ),ContactUsRow(
-                    link: "https://x.com/TheGate1a",
-                    icon: xGate,
-                    isgate: true,
-                  ),
-                ],
-              )
+             
             ],
           ),
         ));
